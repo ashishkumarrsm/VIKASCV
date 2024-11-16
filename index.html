@@ -1,385 +1,276 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <!-- Adding Font Awesome for eye icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vikas - Farm Manager & Agricultural Professional</title>
     <style>
+        /* Reset and base styles */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
             padding: 20px;
+            background: #fff;
         }
 
-        .form-container {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 500px;
-        }
-
-        h2 {
-            color: #2c3e50;
-            margin-bottom: 1.5rem;
+        /* Header styles */
+        .header {
             text-align: center;
-            font-size: 1.8rem;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #2c5282;
         }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-            position: relative;
+        .header h1 {
+            font-size: 2.5em;
+            color: #2c5282;
+            margin-bottom: 10px;
         }
 
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
+        .header p {
+            margin: 5px 0;
+        }
+
+        /* Section styles */
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #2c5282;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #cbd5e0;
+        }
+
+        /* Experience items */
+        .experience-item {
+            margin-bottom: 20px;
+        }
+
+        .job-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #2d3748;
+        }
+
+        .company {
+            font-weight: bold;
+        }
+
+        .date {
             color: #4a5568;
-            font-weight: 500;
+            font-style: italic;
         }
 
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
+        /* Lists */
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-top: 5px;
         }
 
-        /* Adjust padding for password fields to accommodate the eye icon */
-        input[type="password"],
-        input[type="text"].password-input {
-            padding-right: 45px;
+        ul li {
+            margin-bottom: 5px;
         }
 
-        input:focus, select:focus {
-            outline: none;
-            border-color: #4CAF50;
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        /* Skills grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
         }
 
-        .error-message {
-            color: #e53e3e;
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
-            display: none;
-            padding-left: 0.5rem;
+        .skill-item {
+            background: #f7fafc;
+            padding: 8px;
+            border-radius: 4px;
         }
 
-        .success-message {
-            color: #38a169;
-            text-align: center;
-            margin-top: 1rem;
-            display: none;
+        /* Education */
+        .education-item {
+            margin-bottom: 15px;
         }
 
-        .error input, .error select {
-            border-color: #e53e3e;
+        .education-title {
+            font-weight: bold;
         }
 
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
+        /* References */
+        .references {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
 
-        button:hover {
-            background-color: #45a049;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        .reference-item {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 4px;
         }
 
-        button:active {
-            transform: translateY(0);
-        }
+        /* Print styles */
+        @media print {
+            body {
+                padding: 0.5in;
+            }
 
-        .input-icon {
-            position: absolute;
-            right: 12px;
-            top: 38px;
-            color: #a0aec0;
-            display: none;
-        }
+            .header {
+                border-bottom: 1px solid #000;
+            }
 
-        .success .input-icon {
-            color: #38a169;
-            display: block;
-        }
+            .section-title {
+                border-bottom: 1px solid #000;
+            }
 
-        .progress-bar {
-            height: 4px;
-            background-color: #e2e8f0;
-            border-radius: 2px;
-            margin-bottom: 1rem;
-            overflow: hidden;
-        }
-
-        .progress {
-            height: 100%;
-            width: 0;
-            background-color: #4CAF50;
-            transition: width 0.3s ease;
-        }
-
-        /* New styles for password toggle */
-        .password-toggle {
-            position: absolute;
-            right: 12px;
-            top: 38px;
-            cursor: pointer;
-            color: #718096;
-            z-index: 10;
-            transition: color 0.3s ease;
-        }
-
-        .password-toggle:hover {
-            color: #4a5568;
-        }
-
-        /* Adjust position of success checkmark for password fields */
-        .form-group.success .input-icon {
-            right: 40px;
+            .skill-item, .reference-item {
+                background: none;
+                border: 1px solid #ddd;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h2>Registration Form</h2>
-        <div class="progress-bar">
-            <div class="progress"></div>
-        </div>
-        <form id="registrationForm">
-            <div class="form-group">
-                <label for="fullName">Full Name</label>
-                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name">
-                <span class="input-icon">✓</span>
-                <div class="error-message">Please enter a valid name (minimum 2 words)</div>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email">
-                <span class="input-icon">✓</span>
-                <div class="error-message">Please enter a valid email address</div>
-            </div>
-
-            <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
-                <span class="input-icon">✓</span>
-                <div class="error-message">Please enter a valid phone number</div>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password">
-                <i class="password-toggle fas fa-eye-slash"></i>
-                <span class="input-icon">✓</span>
-                <div class="error-message">Password must be at least 8 characters with numbers and letters</div>
-            </div>
-
-            <div class="form-group">
-                <label for="confirmPassword">Confirm Password</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password">
-                <i class="password-toggle fas fa-eye-slash"></i>
-                <span class="input-icon">✓</span>
-                <div class="error-message">Passwords do not match</div>
-            </div>
-
-            <button type="submit">Register</button>
-        </form>
-        <div class="success-message">Registration successful! Thank you for signing up.</div>
+    <div class="header">
+        <h1>VIKAS</h1>
+        <p>Farm Manager & Agricultural Professional</p>
+        <p>Babain, Haryana, India 136156</p>
+        <p>Phone: +91 7988917294</p>
+        <p>Email: saini22ashish@gmail.com</p>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            let validFields = {
-                fullName: false,
-                email: false,
-                phone: false,
-                password: false,
-                confirmPassword: false
-            };
+    <div class="section">
+        <h2 class="section-title">PROFESSIONAL SUMMARY</h2>
+        <p>Dedicated agricultural professional with a B.Sc. in Agriculture and extensive experience in farm management, livestock handling, and sustainable farming practices. Proven track record in implementing efficient farming operations, managing teams, and achieving production goals. Skilled in modern agricultural techniques, including precision farming and sustainable practices.</p>
+    </div>
 
-            // Password Toggle Functionality
-            $('.password-toggle').click(function() {
-                const $passwordInput = $(this).siblings('input');
-                const isPassword = $passwordInput.attr('type') === 'password';
-                
-                // Toggle password visibility
-                $passwordInput.attr('type', isPassword ? 'text' : 'password');
-                
-                // Toggle eye icon
-                $(this).toggleClass('fa-eye fa-eye-slash');
-            });
-
-            function updateProgressBar() {
-                const totalFields = Object.keys(validFields).length;
-                const validCount = Object.values(validFields).filter(Boolean).length;
-                const percentage = (validCount / totalFields) * 100;
-                $('.progress').css('width', percentage + '%');
-            }
-
-            function validateField(field, value, regex, errorMessage) {
-                const $field = $(field);
-                const $group = $field.closest('.form-group');
-                const isValid = regex.test(value);
-                
-                validFields[$field.attr('id')] = isValid;
-                
-                if (isValid) {
-                    $group.removeClass('error').addClass('success');
-                    $group.find('.error-message').slideUp();
-                } else {
-                    $group.addClass('error').removeClass('success');
-                    $group.find('.error-message').slideDown();
-                }
-                
-                updateProgressBar();
-                return isValid;
-            }
-
-            // Full Name Validation
-            $('#fullName').on('input', function() {
-                validateField(
-                    this,
-                    $(this).val(),
-                    /^[a-zA-Z]+ [a-zA-Z]+/,
-                    'Please enter your full name'
-                );
-            });
-
-            // Email Validation
-            $('#email').on('input', function() {
-                validateField(
-                    this,
-                    $(this).val(),
-                    /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    'Please enter a valid email'
-                );
-            });
-
-            // Phone Validation
-            $('#phone').on('input', function() {
-                validateField(
-                    this,
-                    $(this).val(),
-                    /^\d{10}$/,
-                    'Please enter a valid 10-digit phone number'
-                );
-            });
-
-            // Password Validation
-            $('#password').on('input', function() {
-                const isValid = validateField(
-                    this,
-                    $(this).val(),
-                    /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                    'Password must be at least 8 characters with numbers and letters'
-                );
-                
-                if (isValid) {
-                    $('#confirmPassword').trigger('input');
-                }
-            });
-
-            // Confirm Password Validation
-            $('#confirmPassword').on('input', function() {
-                validateField(
-                    this,
-                    $(this).val(),
-                    new RegExp('^' + $('#password').val() + '$'),
-                    'Passwords do not match'
-                );
-            });
-
-            // Form Submission
-            $('#registrationForm').on('submit', function(e) {
-                e.preventDefault();
-                
-                const allValid = Object.values(validFields).every(Boolean);
-                
-                if (allValid) {
-                    $('.success-message').slideDown();
-                    $(this).find('button').prop('disabled', true).text('Registration Complete!');
-                    
-                    // You would typically send the data to a server here
-                    console.log('Form submitted with data:', {
-                        fullName: $('#fullName').val(),
-                        email: $('#email').val(),
-                        phone: $('#phone').val()
-                    });
-                } else {
-                    // Trigger validation on all fields
-                    $('#fullName, #email, #phone, #password, #confirmPassword').trigger('input');
-                }
-            });
-        });
-
-
-        // Add this to your existing jQuery code, inside the form submission handler
-
-$('#registrationForm').on('submit', function(e) {
-    e.preventDefault();
-    
-    const allValid = Object.values(validFields).every(Boolean);
-    
-    if (allValid) {
-        // Collect form data
-        const formData = {
-            fullName: $('#fullName').val(),
-            email: $('#email').val(),
-            phone: $('#phone').val(),
-            password: $('#password').val()
-        };
+    <div class="section">
+        <h2 class="section-title">PROFESSIONAL EXPERIENCE</h2>
         
-        // Send AJAX request
-        $.ajax({
-            type: 'POST',
-            url: 'register.php',
-            data: formData,
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    $('.success-message').text(response.message).slideDown();
-                    $('#registrationForm').find('button')
-                        .prop('disabled', true)
-                        .text('Registration Complete!');
-                        
-                    // Optional: Reset form
-                    $('#registrationForm')[0].reset();
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function(xhr, status, error) {
-                alert('An error occurred: ' + error);
-            }
-        });
-    } else {
-        // Trigger validation on all fields
-        $('#fullName, #email, #phone, #password, #confirmPassword').trigger('input');
-    }
-});
-    </script>
+        <div class="experience-item">
+            <div class="job-title">Farm Manager</div>
+            <div class="company">Surbhi Adarsh Gaushala</div>
+            <div class="date">April 2022 - Present</div>
+            <ul>
+                <li>Implement and monitor farm-specific action plans to achieve company objectives</li>
+                <li>Supervise livestock management operations and breeding programs</li>
+                <li>Conduct regular equipment and facility inspections to ensure optimal functionality</li>
+                <li>Prepare detailed operational reports tracking labor hours and daily harvest metrics</li>
+                <li>Manage laboratory operations and maintain testing equipment</li>
+                <li>Develop and implement vermicompost production systems</li>
+            </ul>
+        </div>
+
+        <div class="experience-item">
+            <div class="job-title">Agriculture Advisor</div>
+            <div class="company">Self-Employed</div>
+            <div class="date">January 2022 - Present</div>
+            <ul>
+                <li>Provide expert consultation on agricultural practices and farm management</li>
+                <li>Develop precision agriculture systems reducing herbicide and pesticide usage</li>
+                <li>Implement test plans achieving 82% success rate in project releases</li>
+            </ul>
+        </div>
+
+        <div class="experience-item">
+            <div class="job-title">Farm Manager (Trainee)</div>
+            <div class="company">Sikri Farms</div>
+            <div class="date">November 2020 - December 2020</div>
+            <ul>
+                <li>Managed ranch schedules for livestock, special events, and crop operations</li>
+                <li>Oversaw grower relationships and product procurement</li>
+                <li>Supervised employees and subcontractors to meet yield and quality goals</li>
+                <li>Conducted regular pasture inspections for maintenance and pest control</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">EDUCATION</h2>
+        
+        <div class="education-item">
+            <div class="education-title">B.Sc. (Hons.) in Agriculture</div>
+            <div>Maharishi Markendeshwar University, Sadopur, Ambala</div>
+            <div class="date">March 2017 - December 2021</div>
+            <div>CGPA: 7.20/10.0</div>
+        </div>
+
+        <div class="education-item">
+            <div class="education-title">Senior Secondary Education</div>
+            <div>Board of School Education Haryana</div>
+            <div class="date">Completed February 2017</div>
+            <div>GPA: 3.0/4.0</div>
+        </div>
+
+        <div class="education-item">
+            <div class="education-title">Secondary Education</div>
+            <div>Board of School Education Haryana</div>
+            <div class="date">Completed February 2015</div>
+            <div>GPA: 3.16/4.0</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">CERTIFICATIONS</h2>
+        <ul>
+            <li>Livestock Management - Maharishi Markendeshwar University (March 2020)</li>
+            <li>Vegetable and Fruit Management - Maharishi Markendeshwar University (August 2021)</li>
+            <li>Environmental Studies and Disaster Management - Maharishi Markendeshwar University (August 2020)</li>
+            <li>Soil Testing - Maharishi Markendeshwar University (December 2018)</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">TECHNICAL SKILLS</h2>
+        <div class="skills-grid">
+            <div class="skill-item">Livestock Management & Breeding</div>
+            <div class="skill-item">Milking Process Operations</div>
+            <div class="skill-item">Water ECS and pH Testing</div>
+            <div class="skill-item">Crop Planning and Management</div>
+            <div class="skill-item">Soil Testing and Analysis</div>
+            <div class="skill-item">Precision Agriculture Systems</div>
+            <div class="skill-item">Vermicompost Production</div>
+            <div class="skill-item">Microsoft Office Suite</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">LANGUAGES</h2>
+        <ul>
+            <li>Hindi (Native)</li>
+            <li>English (Professional Working Proficiency - B2 Level)</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">PROFESSIONAL REFERENCES</h2>
+        <div class="references">
+            <div class="reference-item">
+                <p><strong>Dr. Devi Singh</strong></p>
+                <p>Head of Department</p>
+                <p>Maharishi Markendeshwar University</p>
+                <p>Email: headagri@mmambala.org</p>
+                <p>Phone: +91 9860124300</p>
+            </div>
+            <div class="reference-item">
+                <p><strong>Dr. Ram Singh</strong></p>
+                <p>Professor</p>
+                <p>Maharishi Markendeshwar University</p>
+                <p>Email: singhdrram@mmumullana.org</p>
+                <p>Phone: +91 9466704021</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
